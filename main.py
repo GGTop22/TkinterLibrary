@@ -49,10 +49,10 @@ class Library:
         self.reader_name_entry = tk.Entry(root, width=30)
         self.reader_name_entry.pack()
 
-        # tk.Button(root, text="Создать читателя", command=self.create_reader, width=20).pack(pady=3)
-        # tk.Button(root, text="Редактировать читателя", command=self.update_reader, width=20).pack(pady=3)
-        # tk.Button(root, text="Удалить читателя", command=self.delete_reader, width=20).pack(pady=3)
-        # tk.Button(root, text="Найти читателя", command=self.get_reader, width=20).pack(pady=3)
+        tk.Button(root, text="Создать читателя", command=self.create_reader, width=20).pack(pady=3)
+        tk.Button(root, text="Редактировать читателя", command=self.update_reader, width=20).pack(pady=3)
+        tk.Button(root, text="Удалить читателя", command=self.delete_reader, width=20).pack(pady=3)
+        tk.Button(root, text="Найти читателя", command=self.get_reader, width=20).pack(pady=3)
 
         tk.Label(root, text="ID Читателя").pack()
         self.nchit_entry = tk.Entry(root, width=30)
@@ -104,33 +104,44 @@ class Library:
         # else:
         #     messagebox.showerror("Ошибка", "Для возврата должны быть указаны обе даты")
 
-    # def create_reader(self):
-    #     reader_id = self.reader_id_manage_entry.get()
-    #     name = self.reader_name_entry.get()
-    #
-    #     url = 'http://127.0.0.1:5000/reader'
-    #     payload = {
-    #         "reader_id": reader_id,
-    #         "name": name,
-    #
-    #     }
-    #
-    #     r = requests.post(url, json=payload)
-    #     self.json_text.insert(tk.INSERT, json.dumps(r.json()))
-    #
-    # def update_reader(self):
-    #     reader_id = self.reader_id_manage_entry.get()
-    #     name = self.reader_name_entry.get()
-    #
-    #     url = f'http://127.0.0.1:5000/reader/{reader_id}'
-    #     payload = {
-    #         "name": name,
-    #
-    #     }
-    #
-    #     r = requests.put(url, json=payload)
-    #     self.json_text.insert(tk.INSERT, json.dumps(r.json()))
+    def create_reader(self):
+        reader_id = self.reader_id_manage_entry.get()
+        name = self.reader_name_entry.get()
 
+        url = 'http://127.0.0.1:5000/reader'
+        payload = {
+            "nchit": reader_id,
+            "fio": name
+
+        }
+
+        r = requests.post(url, json=payload)
+        self.json_text.insert(tk.INSERT, r.json())
+
+    def update_reader(self):
+        reader_id = self.reader_id_manage_entry.get()
+        name = self.reader_name_entry.get()
+
+        url = f'http://127.0.0.1:5000/reader/{reader_id}'
+        payload = {
+            "fio": name
+
+        }
+
+        r = requests.put(url, json=payload)
+        self.json_text.insert(tk.INSERT, r.json())
+
+    def delete_reader(self):
+        reader_id = self.reader_id_manage_entry.get()
+        url = f'http://127.0.0.1:5000/reader/{reader_id}'
+        r = requests.delete(url)
+        self.json_text.insert(tk.INSERT, r.json())
+
+    def get_reader(self):
+        reader_id = self.reader_id_manage_entry.get()
+        url = f'http://127.0.0.1:5000/reader/{reader_id}'
+        r = requests.get(url)
+        self.json_text.insert(tk.INSERT, r.json())
 
     def show_info(self):
         nchit = self.nchit_entry.get()
