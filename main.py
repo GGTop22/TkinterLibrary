@@ -49,8 +49,8 @@ class Library:
         self.reader_name_entry = tk.Entry(root, width=30)
         self.reader_name_entry.pack()
 
-        tk.Button(root, text="Создать читателя", command=self.create_reader, width=20).pack(pady=3)
-        tk.Button(root, text="Редактировать читателя", command=self.update_reader, width=20).pack(pady=3)
+        # tk.Button(root, text="Создать читателя", command=self.create_reader, width=20).pack(pady=3)
+        # tk.Button(root, text="Редактировать читателя", command=self.update_reader, width=20).pack(pady=3)
         # tk.Button(root, text="Удалить читателя", command=self.delete_reader, width=20).pack(pady=3)
         # tk.Button(root, text="Найти читателя", command=self.get_reader, width=20).pack(pady=3)
 
@@ -74,7 +74,7 @@ class Library:
         reader_id = self.reader_id_entry.get()
         title = self.title_entry.get()
         if not takeout_date:
-            takeout_date = datetime.date.today()
+            takeout_date = str(datetime.now().date())
         url = 'http://127.0.0.1:5000/book_schedule'
         payload = {'takeout_date': takeout_date, 'return_date': return_date, 'ex_id': example_id,
                    'reader_id': reader_id, 'title': title}
